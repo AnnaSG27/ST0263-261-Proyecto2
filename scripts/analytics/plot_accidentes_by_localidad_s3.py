@@ -34,6 +34,6 @@ plt.xticks(rotation=45)
 
 plt.tight_layout()
 
-plt.savefig("top_localidades.png")
+plt.savefig("evidencias/graphics/top_localidades.png")
 
 plt.show()
