@@ -5,7 +5,7 @@ from pyathena import connect
 
 S3_STAGING_DIR = "s3://proyecto2-jose-anna-datalake/athena-results/"
 REGION = "us-east-1"
-DATABASE = "movilidad_db"
+DATABASE = "movilidad_spark_db"
 
 conn = connect(
     s3_staging_dir=S3_STAGING_DIR,
@@ -22,13 +22,7 @@ st.title("Dashboard Analítico - Accidentes Viales Bogotá")
 # QUERY 1
 # =========================
 
-query_localidades = """
-SELECT localidad, COUNT(*) AS total_accidentes
-FROM movilidad_db.accidentes_limpios
-GROUP BY localidad
-ORDER BY total_accidentes DESC
-LIMIT 10
-"""
+query_localidades = "SELECT * FROM movilidad_spark_db.v_top_localidades"
 
 df_localidades = run_query(query_localidades)
 
@@ -55,12 +49,7 @@ st.pyplot(fig)
 # QUERY 2
 # =========================
 
-query_gravedad = """
-SELECT gravedad, COUNT(*) AS cantidad
-FROM movilidad_db.accidentes_limpios
-GROUP BY gravedad
-ORDER BY cantidad DESC
-"""
+query_gravedad = "SELECT * FROM movilidad_spark_db.v_accidentes_por_gravedad"
 
 df_gravedad = run_query(query_gravedad)
 
@@ -87,15 +76,7 @@ st.pyplot(fig2)
 # QUERY 3
 # =========================
 
-query_lluvia = """
-SELECT
-    c.llovio,
-    COUNT(*) AS total_accidentes
-FROM movilidad_db.accidentes_limpios a
-JOIN movilidad_db.clima_limpio c
-    ON a.fecha = c.fecha
-GROUP BY c.llovio
-"""
+query_lluvia = "SELECT * FROM movilidad_spark_db.v_lluvia_vs_accidentes"
 
 df_lluvia = run_query(query_lluvia)
 
@@ -120,21 +101,7 @@ st.pyplot(fig3)
 # QUERY 4
 # =========================
 
-query_vehiculos = """
-SELECT
-    p.localidad,
-    COUNT(*) AS accidentes,
-    p.total_vehiculos,
-    ROUND(
-        (COUNT(*) * 1000.0 / p.total_vehiculos),
-        2
-    ) AS accidentes_por_1000_vehiculos
-FROM movilidad_db.accidentes_limpios a
-JOIN movilidad_db.parque_automotor_limpio p
-    ON LOWER(a.localidad) = LOWER(p.localidad)
-GROUP BY p.localidad, p.total_vehiculos
-ORDER BY accidentes_por_1000_vehiculos DESC
-"""
+query_vehiculos = "SELECT * FROM movilidad_spark_db.v_accidentes_por_1000_vehiculos"
 
 df_vehiculos = run_query(query_vehiculos)
 
