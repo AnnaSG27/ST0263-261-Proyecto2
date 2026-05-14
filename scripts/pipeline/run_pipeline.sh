@@ -10,23 +10,23 @@ echo "========================================="
 
 echo ""
 echo "1. Ingestando parque automotor desde MariaDB hacia S3 raw..."
-python /home/ubuntu/scripts/ingestion/mariadb_to_s3.py
+python /home/ubuntu/ST0263-261-Proyecto2/scripts/ingestion/mariadb_to_s3.py
 
 echo ""
 echo "2. Ingestando datos climáticos desde API Open-Meteo hacia S3 raw..."
-python /home/ubuntu/scripts/ingestion/api_clima_to_s3.py
+python /home/ubuntu/ST0263-261-Proyecto2/scripts/ingestion/api_clima_to_s3.py
 
 echo ""
 echo "3. Procesando accidentes con Apache Spark raw -> trusted_spark..."
-python /home/ubuntu/scripts/processing_spark/clean_accidents_spark.py
+python /home/ubuntu/ST0263-261-Proyecto2/scripts/processing_spark/clean_accidents_spark.py
 
 echo ""
 echo "4. Procesando clima con Apache Spark raw -> trusted_spark..."
-python /home/ubuntu/scripts/processing_spark/clean_clima_spark.py
+python /home/ubuntu/ST0263-261-Proyecto2/scripts/processing_spark/clean_clima_spark.py
 
 echo ""
 echo "5. Procesando parque automotor con Apache Spark raw -> trusted_spark..."
-python /home/ubuntu/scripts/processing_spark/clean_parque_automotor_spark.py
+python /home/ubuntu/ST0263-261-Proyecto2/scripts/processing_spark/clean_parque_automotor_spark.py
 
 echo ""
 echo "6. Ejecutando AWS Glue Crawler para actualizar el Data Catalog..."
