@@ -4,6 +4,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from io import BytesIO
 
+# Definimos el nombre del bucket y de la carpeta de queries
 BUCKET_NAME = "proyecto2-jose-anna-datalake"
 REFINED_PREFIX = "refined/sparksql"
 
